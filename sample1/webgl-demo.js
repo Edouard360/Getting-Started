@@ -41,12 +41,16 @@ function start() {
   gl.shaderSource(fragmentShader, fragmentShaderSource);
   gl.compileShader(fragmentShader);
 
+  //************** Creating the program ************************//
+  
   shaderProgram = gl.createProgram();
   gl.attachShader(shaderProgram, vertexShader);
   gl.attachShader(shaderProgram, fragmentShader);
   gl.linkProgram(shaderProgram);
 
   gl.useProgram(shaderProgram);
+
+  //************** Preparing to send data to the program ************************//
 
   vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "position");
   gl.enableVertexAttribArray(vertexPositionAttribute);
@@ -57,6 +61,8 @@ function start() {
 function drawScene() {
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  
+  //Send data of the program
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
   gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
