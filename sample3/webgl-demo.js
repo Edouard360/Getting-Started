@@ -20,7 +20,7 @@ function start() {
   squareVerticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
 
-  var vertices = [
+  vertices = [
     0.2,  0.2,  0.0,
     -0.2, 0.2,  0.0,
     0.2,  -0.2, 0.0,
@@ -62,4 +62,26 @@ function drawScene() {
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
   requestAnimationFrame(drawScene);
+}
+
+function moveUp(){
+  vertices = vertices.map((i,j) => {return (j%3===1)?i+0.1:i});
+  bind(vertices);
+}
+function moveDown(){
+  vertices = vertices.map((i,j) => {return (j%3===1)?i-0.1:i});
+  bind(vertices);
+}
+function reset(){
+  vertices = [
+    0.2,  0.2,  0.0,
+    -0.2, 0.2,  0.0,
+    0.2,  -0.2, 0.0,
+    -0.2, -0.2, 0.0
+  ];
+  bind(vertices);
+}
+function bind(vertices){
+  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 }
