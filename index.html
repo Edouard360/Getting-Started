@@ -4,7 +4,7 @@
     <title>WebGL Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="webgl-demo.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../webgl.css" type="text/css">
+        <link rel="stylesheet" href="./webgl.css" type="text/css">
 
     <!-- Fragment shader program -->
 
@@ -17,10 +17,11 @@
     <!-- Vertex shader program -->
 
     <script id="shader-vs" type="x-shader/x-vertex">
+      attribute vec3 position;
 
       void main(void) {
-        gl_Position = vec4(0.,0.,0., 1.0);
-        gl_PointSize = 100.0;
+        gl_Position = vec4(position, 1.0);
+
       }
     </script>
   </head>
@@ -29,5 +30,9 @@
     <canvas id="glcanvas" width="400" height="400">
       Your browser doesn't appear to support the HTML5 <code>&lt;canvas&gt;</code> element.
     </canvas>
+    <br/>
+    <button onclick="moveUp()" class="button">UP</button>
+    <button onclick="moveDown()" class="button">DOWN</button>
+    <button onclick="reset()" class="button">RESET</button>
   </body>
 </html>

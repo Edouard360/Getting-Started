@@ -15,21 +15,7 @@ function start() {
   gl.enable(gl.DEPTH_TEST);           // Enable depth testing
   gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
 
-  //************** Creating the buffers ************************//
-
-  squareVerticesBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
-
-  var vertices = [
-    0.2,  0.2,  0.0,
-    -0.2, 0.2,  0.0,
-    0.2,  -0.2, 0.0,
-    -0.2, -0.2, 0.0
-  ];
-
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-
-  //************** Creating the shaders ************************//
+  //************** Program Setup ************************//
 
   var vertexShaderSource = document.getElementById("shader-vs").firstChild.textContent;
   var  vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -41,8 +27,6 @@ function start() {
   gl.shaderSource(fragmentShader, fragmentShaderSource);
   gl.compileShader(fragmentShader);
 
-  //************** Creating the program ************************//
-  
   shaderProgram = gl.createProgram();
   gl.attachShader(shaderProgram, vertexShader);
   gl.attachShader(shaderProgram, fragmentShader);
@@ -50,10 +34,25 @@ function start() {
 
   gl.useProgram(shaderProgram);
 
-  //************** Preparing to send data to the program ************************//
+  //************** Data Setup ************************//
+
+  squareVerticesBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
+
+  vertices = [
+    0.2,  0.2,  0.0,
+    -0.2, 0.2,  0.0,
+    0.2,  -0.2, 0.0,
+    -0.2, -0.2, 0.0
+  ];
+
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
   vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "position");
-  gl.enableVertexAttribArray(vertexPositionAttribute);
+  gl.enableVertexAttribArray(vertexPositionAttribute);  
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
+  gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
 
   drawScene();
 }
@@ -61,11 +60,30 @@ function start() {
 function drawScene() {
 
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  
-  //Send data of the program
-  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
-  gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
   requestAnimationFrame(drawScene);
+}
+
+function moveUp(){
+  vertices = vertices.map((i,j) => {return (j%3===1)?i+0.1:i});
+  bind(vertices);
+}
+function moveDown(){
+  vertices = vertices.map((i,j) => {return (j%3===1)?i-0.1:i});
+  bind(vertices);
+}
+function reset(){
+  vertices = [
+    0.2,  0.2,  0.0,
+    -0.2, 0.2,  0.0,
+    0.2,  -0.2, 0.0,
+    -0.2, -0.2, 0.0
+  ];
+  bind(vertices);
+}
+function bind(vertices){
+  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 }
