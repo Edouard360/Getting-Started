@@ -5,27 +5,32 @@ var shaderProgram;
 var vertexPositionAttribute;
 
 function start() {
+  /**
+   * Step 0 : Preparing the canvas
+   */
   canvas = document.getElementById("glcanvas");
   gl = canvas.getContext("webgl");
 
-  gl.clearColor(27.0/255,27.0/255,27.0/255, 1.0);  // Clear to black, fully opaque
-  gl.clearDepth(1.0);                 // Clear everything
-  gl.enable(gl.DEPTH_TEST);           // Enable depth testing
+  gl.clearColor(27.0/255,27.0/255,27.0/255, 1.0);  // Clear to the Inovia black
+  gl.clearDepth(1.0); // Clear the depth buffer
+  gl.enable(gl.DEPTH_TEST); // Enable depth testing (objects in the front hide the others)
 
-  //************** Creating the shaders ************************//
-
+  /**
+   * Step 1 : Creating the shaders
+   */
   var vertexShaderSource = document.getElementById("shader-vs").firstChild.textContent;
-  var  vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  var vertexShader = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertexShader, vertexShaderSource);
   gl.compileShader(vertexShader);
 
   var fragmentShaderSource = document.getElementById("shader-fs").firstChild.textContent;
-  var  fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
   gl.shaderSource(fragmentShader, fragmentShaderSource);
   gl.compileShader(fragmentShader);
 
-  //************** Creating the program ************************//
-  
+  /**
+   * Step 2 : Creating the program from the shaders
+   */
   shaderProgram = gl.createProgram();
   gl.attachShader(shaderProgram, vertexShader);
   gl.attachShader(shaderProgram, fragmentShader);
@@ -33,19 +38,21 @@ function start() {
 
   gl.useProgram(shaderProgram);
 
+  /**
+   * Step 3,4,5 : Please, read next article, and checkout to 3-orange-square-data-setup 
+   * to understand the what we do in sendDataToProgram, and the drawScene function
+   */
   sendDataToProgram();
   drawScene();
 }
 
 function drawScene() {
-
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  draw();
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   requestAnimationFrame(drawScene);
 }
 
 function sendDataToProgram(){
- //************** Creating the buffers ************************//
   squareVerticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
 
@@ -58,13 +65,9 @@ function sendDataToProgram(){
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-  //************** Preparing to send data to the program ************************//
   vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "position");
   gl.enableVertexAttribArray(vertexPositionAttribute);
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
   gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
-}
-function draw(){
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
  
