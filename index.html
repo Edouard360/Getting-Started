@@ -4,8 +4,9 @@
     <title>WebGL Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="webgl-demo.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../webgl.css" type="text/css">
-
+        <link rel="stylesheet" href="./webgl.css" type="text/css">
+  </head>
+  
     <!-- Fragment shader program -->
 
     <script id="shader-fs" type="x-shader/x-fragment">
@@ -17,13 +18,13 @@
     <!-- Vertex shader program -->
 
     <script id="shader-vs" type="x-shader/x-vertex">
+      attribute vec3 position;
 
       void main(void) {
-        gl_Position = vec4(0.,0.,0., 1.0);
-        gl_PointSize = 100.0;
+        gl_Position = vec4(position, 1.0);
+        gl_PointSize = 10.0;
       }
     </script>
-  </head>
 
   <body onload="start()">
     <canvas id="glcanvas" width="400" height="400">
