@@ -69,7 +69,7 @@ function start() {
   var numCoordinates = 3; // The numbers of coordinates per vertex. Here 3 coordinates (x,y,z).
   var type = gl.FLOAT; // The size of each element is a float.
   var normalize = false; //we don’t want normalized values here.
-  var stride = 0 ; // the offset in bytes of the first coordinate in the array.
+  var stride = 3 * 4; //* (gl.FLOAT); // the offset in bytes of the first coordinate in the array.
   var offset = 0; // the offset in bytes between the consecutive vertex coordinates.
 
   gl.vertexAttribPointer(attributeLocation, numCoordinates,type, normalize, stride, offset);
