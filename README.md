@@ -23,5 +23,5 @@ git checkout 4-moving-square
 
 ## License
 
-This repo is maintained with love by [Inovia Team](https://inovia-team.com).
+This repo is  maintained with love by [Inovia Team](https://inovia-team.com).
 Made in San Francisco.

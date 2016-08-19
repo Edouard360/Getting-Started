@@ -5,11 +5,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="webgl-demo.js" type="text/javascript"></script>
         <link rel="stylesheet" href="./webgl.css" type="text/css">
+
+    <!-- Vertex shader program -->
+
+    <script id="shader-vs" type="x-shader/x-vertex">
+      attribute vec3 position;
+      attribute float light; // The light factor attribute for each vertex
+      uniform vec3 offset; 
+      varying float varyingLight; // The varying for the transparency
+      void main(void) {
+        varyingLight = light;
+        gl_Position = vec4(offset + position, 1.0); 
+      }
+    </script>
+
+    <!-- Fragment shader program -->
+
+    <script id="shader-fs" type="x-shader/x-fragment">
+        precision highp float;
+        uniform vec3 color; 
+        varying float varyingLight; // Interpolated value
+
+        void main(void) {
+            vec3 color = color * varyingLight;
+            gl_FragColor = vec4(color, 1);
+        }
+    </script>
+
   </head>
 
   <body onload="start()">
     <canvas id="glcanvas" width="400" height="400">
       Your browser doesn't appear to support the HTML5 <code>&lt;canvas&gt;</code> element.
     </canvas>
+    <br/>
+    <button onclick="moveUp()" class="button">UP</button>
+    <button onclick="moveDown()" class="button">DOWN</button>
+    <button onclick="reset()" class="button">RESET</button>
   </body>
 </html>
