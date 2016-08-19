@@ -7,14 +7,6 @@
         <link rel="stylesheet" href="./webgl.css" type="text/css">
   </head>
   
-    <!-- Fragment shader program -->
-
-    <script id="shader-fs" type="x-shader/x-fragment">
-        void main(void) {
-            gl_FragColor = vec4(232.0/255., 85.0/255., 47.0/255., 1.0); // The inovia orange color!
-        }
-    </script>
-
     <!-- Vertex shader program -->
 
     <script id="shader-vs" type="x-shader/x-vertex">
@@ -23,6 +15,14 @@
       void main(void) {
         gl_Position = vec4(position, 1.0);
       }
+    </script>
+
+    <!-- Fragment shader program -->
+
+    <script id="shader-fs" type="x-shader/x-fragment">
+        void main(void) {
+            gl_FragColor = vec4(232.0/255., 85.0/255., 47.0/255., 1.0); // The inovia orange color!
+        }
     </script>
 
   <body onload="start()">
