@@ -44,14 +44,14 @@ function start() {
   squareVerticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer); 
 
-  var vertices = [
+  var vertices = new Float32Array([
     0.2,  0.2,  0.0,
     -0.2, 0.2,  0.0,
     0.2,  -0.2, 0.0,
     -0.2, -0.2, 0.0
-  ];
+  ]);
 
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); 
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW); 
 
   /**
    * Step 4 : Sending data from the buffers to the program 
@@ -86,6 +86,4 @@ function drawScene() {
   var start = 0; // The starting index in the array
   var count = 4; // The number of indices to be rendered
   gl.drawArrays(option, start, count);
-
-  requestAnimationFrame(drawScene);
 }
