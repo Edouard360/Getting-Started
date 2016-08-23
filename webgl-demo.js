@@ -41,9 +41,6 @@ function start() {
   /**
    * Step 3 : Creating and filling the buffers
    */
-  squareVerticesBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer); 
-
   var vertices = new Float32Array([
     0.2,  0.2,  0.0,
     -0.2, 0.2,  0.0,
@@ -51,7 +48,13 @@ function start() {
     -0.2, -0.2, 0.0
   ]);
 
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW); 
+  // Creates an empty buffer of type WebGLBuffer
+  squareVerticesBuffer = gl.createBuffer(); 
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer); 
+  // gl.ARRAY_BUFFER will refer to squareVerticesBuffer
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+  // Fills the buffer bound to the gl.ARRAY_BUFFER variable, squareVerticesBuffer
 
   /**
    * Step 4 : Sending data from the buffers to the program 
