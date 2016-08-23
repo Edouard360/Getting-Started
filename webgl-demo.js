@@ -45,14 +45,14 @@ function start() {
   squareVerticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer); 
 
-  vertices = [
+  vertices =  new Float32Array([
     0.2,  0.2,  0.0,
     -0.2, 0.2,  0.0,
     0.2,  -0.2, 0.0,
     -0.2, -0.2, 0.0
-  ];
+  ]);
 
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); 
+  gl.bufferData(gl.ARRAY_BUFFER,vertices, gl.STATIC_DRAW); 
 
   /**
    * Step 4 : Sending data from the buffers to the program 
@@ -107,12 +107,12 @@ function moveDown(){
  * reset resets the initial position of the square.
  */
 function reset(){
-  vertices = [
+  vertices = new Float32Array([
     0.2,  0.2,  0.0,
     -0.2, 0.2,  0.0,
     0.2,  -0.2, 0.0,
     -0.2, -0.2, 0.0
-  ];
+  ]);
   buffer(vertices);
 }
 
@@ -122,5 +122,5 @@ function reset(){
  */
 function buffer(vertices){
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 }
