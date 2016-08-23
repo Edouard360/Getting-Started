@@ -49,21 +49,20 @@ function start() {
 function drawScene() {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-  requestAnimationFrame(drawScene);
 }
 
 function sendDataToProgram(){
   squareVerticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
 
-  var vertices = [
+  var vertices = new Float32Array([
     0.2,  0.2,  0.0,
     -0.2, 0.2,  0.0,
     0.2,  -0.2, 0.0,
     -0.2, -0.2, 0.0
-  ];
+  ]);
 
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
   vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "position");
   gl.enableVertexAttribArray(vertexPositionAttribute);
